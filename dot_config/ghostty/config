@@ -1,0 +1,119 @@
+# This is the configuration file for Ghostty.
+
+background-opacity = 1
+
+# Theme
+theme = "0x96f"
+
+# Font
+font-family = Consolas
+font-feature = -calt,-liga,-dlig
+font-size = 12
+
+font-style-bold = false
+font-style-italic = false
+font-style-bold-italic = false
+
+font-thicken = true
+font-thicken-strength = 1
+
+alpha-blending = linear
+
+adjust-cell-width = -1
+adjust-cell-height = 2
+
+# macOS
+# macos-titlebar-style = hidden
+macos-window-shadow = false
+macos-option-as-alt = true
+
+# Window
+# window-padding-x = 10
+# window-padding-y = 10
+window-padding-balance = true
+maximize = true
+window-subtitle = working-directory
+
+# Shell
+shell-integration-features = no-cursor
+
+# Cursor
+cursor-style = block
+cursor-style-blink = false
+cursor-invert-fg-bg = true
+cursor-opacity = 0.8
+
+# Other
+mouse-hide-while-typing = true
+resize-overlay = never
+keybind = shift+enter=text:\x1b\r
+clipboard-paste-protection = false
+confirm-close-surface = false
+
+# tab
+keybind = super+alt+l=next_tab
+keybind = super+alt+h=previous_tab
+
+# keybind
+keybind = super+h=goto_split:left
+keybind = super+j=goto_split:bottom
+keybind = super+k=goto_split:top
+keybind = super+l=goto_split:right
+keybind = shift+super+h=resize_split:left,30
+keybind = shift+super+j=resize_split:down,30
+keybind = shift+super+k=resize_split:up,30
+keybind = shift+super+l=resize_split:right,30
+keybind = ctrl+shift+j=scroll_page_fractional:0.5
+keybind = ctrl+shift+k=scroll_page_fractional:-0.5
+
+# change keybind
+keybind = ¥=text:\\
+
+# quick terminal
+keybind = global:cmd+backquote=toggle_quick_terminal
+
+# tip
+auto-update-channel = tip
+
+# vim mode
+# Entry point
+# keybind = alt+v=activate_key_table:vim
+#
+# # Key table definition
+# keybind = vim/
+#
+# # Line movement
+# keybind = vim/j=scroll_page_lines:1
+# keybind = vim/k=scroll_page_lines:-1
+#
+# # Page movement
+# keybind = vim/ctrl+d=scroll_page_down
+# keybind = vim/ctrl+u=scroll_page_up
+# keybind = vim/ctrl+f=scroll_page_down
+# keybind = vim/ctrl+b=scroll_page_up
+# keybind = vim/shift+j=scroll_page_down
+# keybind = vim/shift+k=scroll_page_up
+#
+# # Jump to top/bottom
+# keybind = vim/g>g=scroll_to_top
+# keybind = vim/shift+g=scroll_to_bottom
+#
+# # Search (if you want vim-style search entry)
+# keybind = vim/slash=start_search
+# keybind = vim/n=navigate_search:next
+#
+# # Copy mode / selection
+# # Note we're missing a lot of actions here to make this more full featured.
+# keybind = vim/v=copy_to_clipboard
+# keybind = vim/y=copy_to_clipboard
+#
+# # Command Palette
+# keybind = vim/shift+semicolon=toggle_command_palette
+#
+# # Exit
+# keybind = vim/escape=deactivate_key_table
+# keybind = vim/q=deactivate_key_table
+# keybind = vim/i=deactivate_key_table
+#
+# # Catch unbound keys
+# keybind = vim/catch_all=ignore

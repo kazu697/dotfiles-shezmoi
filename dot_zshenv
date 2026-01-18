@@ -1,0 +1,33 @@
+# ----------------------------------------------------
+# .zshenv
+#
+# initial setup file for both interactive and noninteractive zsh
+#
+# ----------------------------------------------------
+
+# Disable loading of global configuration files
+# unsetopt GLOBAL_RCS
+
+# XDG
+export XDG_CONFIG_HOME=${HOME}/.config
+export XDG_CACHE_HOME=${HOME}/.cache
+export XDG_DATA_HOME=${HOME}/.local/share
+export XDG_STATE_HOME=${HOME}/.local/state
+
+# claude
+export CLAUDE_CONFIG_DIR=${XDG_CONFIG_HOME}/.claude
+
+# fzf
+export FZF_DEFAULT_OPTS=" --reverse --style=full:rounded --height 45%"
+
+# zsh
+# export ZDOTDIR=${XDG_CONFIG_HOME}/zsh
+# export ZRCDIR=$ZDOTDIR/rc
+# export LOCAL_ZSH_DIR="${HOME}/.config/local/zsh"
+
+. "$HOME/.cargo/env"
+
+export PATH="${HOME}/.local/bin:$PATH"
+
+# editor
+export EDITOR="nvim"

@@ -1,0 +1,62 @@
+bindkey -e
+eval "$(mise activate zsh)"
+eval "$(sheldon source)"
+eval "$(direnv hook zsh)"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(${HOME}/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+alias d="docker"
+alias dc="docker compose"
+alias g="git"
+alias gs="git switch"
+alias gsc="git switch -c"
+alias gpl="git pull"
+alias gph="git push"
+alias gphf="git push --force-with-lease"
+alias tf="terraform"
+alias gwa="git worktree add"
+alias ll="ls -la"
+alias lg="lazygit"
+alias v="nvim"
+alias ch="chezmoi"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/Cellar/tfenv/3.0.0/versions/1.12.2/terraform terraform
+
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+# Enable substitution in the prompt.
+setopt prompt_subst
+
+alias c="claude"
+alias gbd="git branch -D"
+alias cdr="cd \$(ghq root)/\$(ghq list | fzf)"
+alias vim="nvim"
+eval "$(starship init zsh)"
+source <(fzf --zsh)
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+
+# ghq
+function ghq-fzf() {
+  local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
+  if [ -n "$src" ]; then
+    BUFFER="cd $(ghq root)/$src"
+    zle accept-line
+  fi
+  zle -R -c
+}
+zle -N ghq-fzf
+
+bindkey '^g' ghq-fzf
+
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
