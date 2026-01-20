@@ -19,6 +19,7 @@ alias ll="ls -la"
 alias lg="lazygit"
 alias v="nvim"
 alias ch="chezmoi"
+alias vf="nvim \$(fzf)"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/Cellar/tfenv/3.0.0/versions/1.12.2/terraform terraform
