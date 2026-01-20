@@ -1,4 +1,5 @@
 [tools]
+"cargo:git-delta" = "latest"
 "cargo:sheldon" = "latest"
 chezmoi = "2.69.3"
 fd = "latest"
@@ -9,3 +10,6 @@ rust = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
+
+[env]
+_.file = '.env'

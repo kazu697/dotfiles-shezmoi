@@ -1,11 +1,10 @@
 bindkey -e
 eval "$(mise activate zsh)"
 eval "$(sheldon source)"
-eval "$(direnv hook zsh)"
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(${HOME}/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
+fpath=(${HOME}/.docker/completions ${HOME}/.zsh/completions $fpath)
+autoload -Uz compinit && compinit
+
 alias d="docker"
 alias dc="docker compose"
 alias g="git"
@@ -23,9 +22,6 @@ alias ch="chezmoi"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/Cellar/tfenv/3.0.0/versions/1.12.2/terraform terraform
-
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 # Enable substitution in the prompt.
 setopt prompt_subst
