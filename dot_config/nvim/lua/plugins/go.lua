@@ -3,7 +3,7 @@ return {
   -- LazyVim Go extras: treesitter + gopls + DAP + mason
   { import = "lazyvim.plugins.extras.lang.go" },
 
-  -- Configure inlay hints: show parameter names only, hide variable types
+  -- Configure gopls inlay hints and add golangci-lint-langserver
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -20,12 +20,26 @@ return {
                 compositeLiteralTypes = false,
                 constantValues = false,
                 functionTypeParameters = false,
-                parameterNames = true, -- 関数の引数名を表示
+                parameterNames = true,
                 rangeVariableTypes = false,
               },
             },
           },
         },
+        -- golangci-lint language server（gopls と併用して lint 診断を提供）
+        golangci_lint_ls = {},
+      },
+    },
+  },
+
+  -- mason.nvim で必要なツールを自動インストール
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "gopls",
+        "golangci-lint",
+        "golangci-lint-langserver",
       },
     },
   },
