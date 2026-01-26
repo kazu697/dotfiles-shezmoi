@@ -12,7 +12,9 @@
       "Bash(gh issue list:*)",
       "Bash(gh issue view:*)",
       "Bash(gh issue create:*)",
-      "Bash(gh issue edit:*)"
+      "Bash(gh issue edit:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)"
     ],
     "ask": ["Bash(git add:*)"],
     "defaultMode": "plan"

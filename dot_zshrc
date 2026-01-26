@@ -55,5 +55,16 @@ zle -N ghq-fzf
 
 bindkey '^g' ghq-fzf
 
+# gtr worktree branch selector with fzf
+function gw-fzf() {
+  local selected=$(gtr list --porcelain | rg -v '\(detached\)' | awk '{print $2}' | fzf --prompt="worktree> ")
+  if [ -n "$selected" ]; then
+    LBUFFER="${LBUFFER}${selected}"
+  fi
+  zle reset-prompt
+}
+zle -N gw-fzf
+bindkey '^W' gw-fzf
+
 setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
