@@ -102,7 +102,7 @@ return {
           hidden = true,
           ignored = true,
           exclude = { ".git", ".jj" },
-          jump = { close = true },
+          jump = { close = false },
           confirm = { "edit" },
         },
         files = {
@@ -114,6 +114,9 @@ return {
         },
         recent = {
           filter = { cwd = true }, -- 現在のディレクトリのファイルのみ表示
+        },
+        git_diff = {
+          group = true, -- ファイル単位でグループ化
         },
       },
     },

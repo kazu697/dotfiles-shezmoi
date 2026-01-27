@@ -1,6 +1,9 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
+--
+-- insert mode
+vim.keymap.set("i", "<C-d>", "<Del>", { noremap = true, silent = true })
 
 -- Buffer navigation
 vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
@@ -37,7 +40,8 @@ vim.keymap.set("n", "<leader>yr", function()
   end
 
   -- Get git root using git rev-parse
-  local gitroot = vim.fn.system("git -C " .. vim.fn.shellescape(vim.fn.expand("%:p:h")) .. " rev-parse --show-toplevel 2>/dev/null")
+  local gitroot =
+    vim.fn.system("git -C " .. vim.fn.shellescape(vim.fn.expand("%:p:h")) .. " rev-parse --show-toplevel 2>/dev/null")
   gitroot = gitroot:gsub("\n", "") -- Remove trailing newline
 
   -- Check if git command succeeded
