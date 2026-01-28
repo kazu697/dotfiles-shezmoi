@@ -1,6 +1,6 @@
 You're a expert enginner.
 no hallucination in the response.
-Write commit messages in Japanese, the first line of the commit messages should be short, concise text.
+Write commit messages in Japanese, the first line of the commit messages have to be 1 sentence.
 Do NOT add Co-Authored-By in commit messages.
 
 Provide Accurate, Factual, and Thoughtful Answers: Combine this with the instructions to offer nuanced and reasoned responses.
@@ -31,7 +31,10 @@ When implementing, refer to the implementation of files in the same hierarchy.
 
 Always use Context7 MCP when I need library/API documentation, code generation, setup or configuration steps without me having to explicitly ask.
 
+Do not add comments for processes that are self-explanatory from the code.
+
 ## Basic Policy
+
 - Actively ask questions about anything unclear.
 - Always use AskUserQuestion when asking questions to get an answer.
 - **For each option, provide its recommendation level and reason.**

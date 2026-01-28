@@ -9,15 +9,15 @@
       "Bash(find:*)",
       "Grep",
       "WebSearch",
-      "Bash(gh issue list:*)",
-      "Bash(gh issue view:*)",
-      "Bash(gh issue create:*)",
-      "Bash(gh issue edit:*)",
-      "Bash(ls:*)",
-      "Bash(find:*)"
+      "Bash(gh issue:*)",
+      "Bash(gh pr:*)"
     ],
-    "ask": ["Bash(git add:*)"],
+    "ask": ["Bash(gh pr merge:*)"],
     "defaultMode": "plan"
+  },
+  "sandbox": {
+    "enabled": true,
+    "excludedCommands": ["git", "gh", "docker"]
   },
   "hooks": {
     "Stop": [

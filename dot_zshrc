@@ -1,6 +1,7 @@
 bindkey -e
 eval "$(mise activate zsh)"
 eval "$(sheldon source)"
+# eval "$(gtr completion zsh)"
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(${HOME}/.docker/completions ${HOME}/.zsh/completions $fpath)
 autoload -Uz compinit && compinit
