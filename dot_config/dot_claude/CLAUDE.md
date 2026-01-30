@@ -36,7 +36,7 @@ Do not add comments for processes that are self-explanatory from the code.
 
 If you make changes and then git push when a PR has already been created, please change the PR title and description.
 
-If I ask you something, Do not change the plan mode, just answer the quesitions I asked.
+If I ask you something or wirte [q] in a prompt, Do not change the plan mode, just answer the quesitions I asked.
 
 ## Basic Policy
 
