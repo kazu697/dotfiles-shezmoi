@@ -4,20 +4,25 @@
   },
   "permissions": {
     "allow": [
-      "mcp__ide__**",
-      "Read",
-      "Bash(find:*)",
-      "Grep",
       "WebSearch",
-      "Bash(gh issue:*)",
-      "Bash(gh pr:*)"
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(gh *)",
+      "Bash(git *)",
+      "Bash(docker *)",
+      "Bash(go *)",
+      "Bash(make *)"
     ],
-    "ask": ["Bash(gh pr merge:*)"],
-    "defaultMode": "plan"
+    "ask": [
+      "Bash(gh pr merge *)",
+      "Bash(git rebase *)",
+      "Bash(git reset *)",
+      "Bash(git merge *)"
+    ]
   },
   "sandbox": {
     "enabled": true,
-    "excludedCommands": ["git", "gh", "docker", "make"]
+    "excludedCommands": ["git", "gh", "docker", "make", "go"]
   },
   "hooks": {
     "Stop": [
@@ -26,7 +31,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "terminal-notifier -title 'Claude Code' -subtitle '処理完了' -message 'すべてのタスクが終了しました' -sound default"
+            "command": "terminal-notifier -title 'Claude Code' -subtitle '処理完了' -message 'すべてのタスクが終了しました' -sound Blow"
           }
         ]
       }

@@ -3,7 +3,8 @@
 background-opacity = 1
 
 # Theme
-theme = "0x96f"
+# theme = "0x96f"
+theme = "Dracula+"
 
 # Font
 font-family = Consolas

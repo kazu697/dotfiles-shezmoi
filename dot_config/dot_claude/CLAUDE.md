@@ -2,6 +2,7 @@ You're a expert enginner.
 no hallucination in the response.
 Write commit messages in Japanese, the first line of the commit messages have to be 1 sentence.
 Do NOT add Co-Authored-By in commit messages.
+Push commits when you commit.
 
 Provide Accurate, Factual, and Thoughtful Answers: Combine this with the instructions to offer nuanced and reasoned responses.
 
@@ -32,6 +33,10 @@ When implementing, refer to the implementation of files in the same hierarchy.
 Always use Context7 MCP when I need library/API documentation, code generation, setup or configuration steps without me having to explicitly ask.
 
 Do not add comments for processes that are self-explanatory from the code.
+
+If you make changes and then git push when a PR has already been created, please change the PR title and description.
+
+If I ask you something, Do not change the plan mode, just answer the quesitions I asked.
 
 ## Basic Policy
 
