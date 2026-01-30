@@ -42,7 +42,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "terminal-notifier -title 'Claude Code' -message '質問されています。' -sound default"
+            "command": "terminal-notifier -title 'Claude Code' -message '質問されています。' -sound Glass"
           }
         ]
       }
