@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(mise tasks:*)",
-      "Bash(nvim:*)"
-    ]
+      "Bash(nvim:*)",
+      "Bash(git *)",
+      "Bash(docker *)",
+      "Bash(docker *)"
+    ],
+    "ask": ["Bash(git add *)"]
   }
 }

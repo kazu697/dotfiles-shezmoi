@@ -1,74 +1,76 @@
 ---
-description: Pull RequestのURLからworktreeを作成し、そのディレクトリで作業を行う
+description: Create a worktree from a Pull Request URL and work in that directory
 allowed-tools: Bash(git:*), Bash(gh:*), Bash(gtr:*), Bash(cd:*), Read, Write, Edit, Glob, Grep
 ---
 
-# PR Worktree: PRブランチでのworktree作業
+# PR Worktree: Worktree operations on PR branches
 
-指定されたPull RequestのブランチをgtrでWorktreeとして作成し、そのディレクトリに移動して作業を行います。
+This command creates a worktree for the specified Pull Request branch using `gtr` and moves into that directory to perform work.
 
-## 引数
+## Arguments
 
-- `$ARGUMENTS`: Pull RequestのURLまたはPR番号
+- `$ARGUMENTS`: Pull Request URL or PR number
 
-## 実行手順
+## Execution Steps
 
-### 1. PR情報の取得
+### 1. Get PR Information
 
 ```bash
 gh pr view $ARGUMENTS --json headRefName,baseRefName,title,number
 ```
 
-- `headRefName`: PRのブランチ名（worktree作成に使用）
-- `baseRefName`: ベースブランチ名
-- `title`: PRタイトル
-- `number`: PR番号
+- `headRefName`: PR branch name (used for worktree creation)
+- `baseRefName`: Base branch name
+- `title`: PR title
+- `number`: PR number
 
-### 2. Worktreeの作成
+### 2. Create Worktree
 
-gtrコマンドを使用してworktreeを作成します。
-
-```bash
-git gtr new <headRefName>
-```
-
-既にworktreeが存在する場合は作成をスキップします。
-
-### 3. Worktreeディレクトリへの移動
+Create a worktree using the `gtr` command.
 
 ```bash
-cd "$(git gtr go <headRefName>)"
+gtr new <headRefName>
 ```
 
-**重要**: 以降のすべてのコマンドはこのworktreeディレクトリで実行してください。
+If the worktree already exists, skip creation.
 
-### 4. 現在の状態確認
+### 3. Move to Worktree Directory
 
-移動後、以下を確認します：
-- `git status` でworktreeの状態確認
-- `git log --oneline -5` で最新コミット確認
-- PRの変更内容を理解
+```bash
+cd "$(gtr go <headRefName>)"
+```
 
-### 5. ユーザー指示に従って作業
+**Important**: All subsequent commands should be executed in this worktree directory.
 
-$ARGUMENTSにURL/番号以外の追加指示がある場合は、その指示に従って作業を実行します。
+<h3> 4. Check Current State </h3>
 
-追加指示がない場合は、以下を報告して待機します：
-- Worktreeのパス
-- 現在のブランチ
-- PRの概要
-- 「何をしますか？」と確認
+After moving, check the following:
 
-## 使用例
+- `status` to check the worktree's status
+- `log --oneline -5` to check the latest commits
+- Understand the PR's changes
+
+### 5. Perform Work According to User Instructions
+
+If `$ARGUMENTS` contains additional instructions beyond a URL/number, perform work according to those instructions.
+
+If there are no additional instructions, report the following and wait:
+
+- Worktree path
+- Current branch
+- PR summary
+- Ask "What would you like to do?"
+
+## Usage Examples
 
 ```
 /pr-worktree https://github.com/owner/repo/pull/123
 /pr-worktree 123
-/pr-worktree https://github.com/owner/repo/pull/123 CIエラーを修正して
+/pr-worktree https://github.com/owner/repo/pull/123 Fix CI errors
 ```
 
-## 注意事項
+## Notes
 
-- gtrコマンドはgit-worktree-runnerがインストールされている必要があります
-- worktreeは `~/.gtr/worktrees/` 配下に作成されます
-- 作業完了後、worktreeの削除が必要な場合は `git gtr rm <branch>` を使用
+- The `gtr` command requires `git-worktree-runner` to be installed.
+- Worktrees are created under `~/.gtr/worktrees/`.
+- If you need to delete a worktree after completing your work, use `gtr rm <branch>`.
