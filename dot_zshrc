@@ -1,6 +1,11 @@
 bindkey -e
 eval "$(mise activate zsh)"
 eval "$(sheldon source)"
+
+# Load custom functions from rc directory
+for rc_file in ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/rc/*.zsh(N); do
+    source "$rc_file"
+done
 # eval "$(gtr completion zsh)"
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(${HOME}/.docker/completions ${HOME}/.zsh/completions $fpath)
