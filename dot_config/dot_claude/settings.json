@@ -1,6 +1,7 @@
 {
   "env": {
-    "ENABLE_TOOL_SEARCH": "true"
+    "ENABLE_TOOL_SEARCH": "true",
+    "CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD": 1
   },
   "permissions": {
     "allow": [
@@ -55,12 +56,6 @@
   "language": "日本語",
   "sandbox": {
     "enabled": true,
-    "excludedCommands": [
-      "git",
-      "gh",
-      "docker",
-      "make",
-      "go"
-    ]
+    "excludedCommands": ["git", "gh", "docker", "make", "go"]
   }
 }
