@@ -1,8 +1,5 @@
 -- Go language support with treesitter, LSP, and DAP
 return {
-  -- LazyVim Go extras: treesitter + gopls + DAP + mason
-  { import = "lazyvim.plugins.extras.lang.go" },
-
   -- Configure gopls inlay hints and add golangci-lint-langserver
   {
     "neovim/nvim-lspconfig",
