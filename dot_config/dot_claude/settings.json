@@ -1,7 +1,6 @@
 {
   "env": {
-    "ENABLE_TOOL_SEARCH": "true",
-    "CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD": 1
+    "ENABLE_TOOL_SEARCH": "true"
   },
   "permissions": {
     "allow": [
@@ -11,8 +10,14 @@
       "Bash(gh *)",
       "Bash(git *)",
       "Bash(docker *)",
-      "Bash(go *)",
-      "Bash(make *)"
+      "Bash(go *)"
+    ],
+    "deny": [
+      "Bash(rm:*)",
+      "Read(~/.ssh)",
+      "Read(~/.aws)",
+      "Bash(aws:*)",
+      "Bash(ssh:*)"
     ],
     "ask": [
       "Bash(gh pr merge *)",
@@ -51,11 +56,13 @@
   },
   "enabledPlugins": {
     "example-skills@anthropic-agent-skills": true,
-    "coderabbit@claude-plugins-official": true
+    "coderabbit@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true
   },
   "language": "日本語",
   "sandbox": {
     "enabled": true,
     "excludedCommands": ["git", "gh", "docker", "make", "go"]
-  }
+  },
+  "autoUpdatesChannel": "latest"
 }

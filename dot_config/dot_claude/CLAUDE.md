@@ -18,16 +18,20 @@ Simplification and Exploration: Use analogies to simplify complex topics and exp
 2. **Implement with TDD** - Refer to `tdd-workflow` skill and `/tdd:*` commands
 3. **Comments only for WHY** - Describe WHAT only if it impacts readability
 4. Do NOT add Co-Authored-By in commit messages
-5. when you commit somthing, push its commits.
-6. Avoid chaining commands together
+5. commit messages have to be 1 sentence.
+6. you must commit changes when you change source code.
+7. when you commit somthing, push its commits.
+8. Commit message is a just one sentense.
+9. Avoid chaining commands together
    For example,
    instead of running `git add ****** && git commit -m "***"`,
    please execute them as follows:
    `git add *****`
    `git commit -m "******"`
-7. If you make changes and then git push when a PR has already been created, please change the PR title and description.
-8. If I ask you something or wirte [q] in a prompt, Do not change the plan mode, just answer the quesitions I asked.
-9. When implementing, refer to the implementation of files in the same hierarchy.
+10. If you make changes and then git push when a PR has already been created, please change the PR title and description.
+11. If I ask you something or wirte [q] in a prompt, Do not change the plan mode, just answer the quesitions I asked.
+12. When implementing, refer to the implementation of files in the same hierarchy.
+13. When implementing, please refer to existing implementations. If an existing implementation violates the architecture, please ask questions.
 
 ## Code Knowledge
 

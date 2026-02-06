@@ -101,7 +101,7 @@ return {
         explorer = {
           hidden = true,
           ignored = true,
-          exclude = { ".git", ".jj" },
+          exclude = { ".jj" },
           jump = { close = false },
           confirm = { "edit" },
         },
@@ -110,9 +110,11 @@ return {
           cwd = vim.fn.getcwd(), -- 現在のディレクトリのみ検索
         },
         grep = {
+          hidden = true,
           cwd = vim.fn.getcwd(), -- 現在のディレクトリのみ検索
         },
         recent = {
+          hidden = true,
           filter = { cwd = true }, -- 現在のディレクトリのファイルのみ表示
         },
         git_diff = {
