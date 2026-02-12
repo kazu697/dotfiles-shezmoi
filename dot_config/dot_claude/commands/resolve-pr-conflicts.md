@@ -1,65 +1,65 @@
 ---
-description: 現在のブランチのPRのマージコンフリクトを解消する
+description: Resolve merge conflicts in the PR for the current branch
 allowed-tools: Bash(git:*), Bash(git merge:*), Bash(gh:*)
 ---
 
 # Resolve PR Merge Conflicts
 
-現在のブランチのPRで発生しているマージコンフリクトを自動解消します。
+Automatically resolve merge conflicts in the PR for the current branch.
 
-## 実行手順
+## Steps
 
-### 1. ワーキングツリーの確認
+### 1. Check Working Tree
 
-- `git status` で未コミットの変更がないか確認
-- 未コミット変更がある場合は **処理を中断** し、ユーザーに通知
+- Run `git status` to check for uncommitted changes
+- If uncommitted changes exist, **abort** and notify the user
 
-### 2. PR情報の取得
+### 2. Get PR Information
 
-- `gh pr view --json number,title,baseRefName,headRefName,url,mergeable,mergeStateStatus` で PR 情報を取得
-- PR が存在しない場合は終了
-- `mergeable` / `mergeStateStatus` でコンフリクトの有無を判定
-- コンフリクトがない場合はその旨を報告して終了
+- Run `gh pr view --json number,title,baseRefName,headRefName,url,mergeable,mergeStateStatus` to get PR details
+- If no PR exists, exit
+- Check `mergeable` / `mergeStateStatus` to determine if conflicts exist
+- If no conflicts, report that and exit
 
-### 3. マージ実行前の確認
+### 3. Confirm Before Merging
 
-- ベースブランチ名、コンフリクトの状態をユーザーに表示
-- AskUserQuestion でマージ実行の確認を取る
+- Display the base branch name and conflict status to the user
+- Use AskUserQuestion to confirm before proceeding with the merge
 
-### 4. ベースブランチのマージ
+### 4. Merge Base Branch
 
 - `git fetch origin <base-branch>`
 - `git merge origin/<base-branch>`
 
-### 5. コンフリクト解消
+### 5. Resolve Conflicts
 
-コンフリクトが発生した場合：
+When conflicts occur:
 
-- `git diff --name-only --diff-filter=U` でコンフリクトファイル一覧を取得
-- 各ファイルについて：
-  - ファイル内容を読み取り、コンフリクトマーカーを確認
-  - **バイナリファイル** の場合はユーザーに判断を委ねる
-  - 両側の変更意図を理解し、適切にマージ
-  - **どちらを採用すべきか判断できない場合** は、必ず AskUserQuestion で両方の変更内容を提示してユーザーに確認する。自信がないまま勝手に選択しないこと
-  - **意味的に矛盾する変更**（同じ関数の異なるロジック変更など）がある場合も AskUserQuestion でユーザーに確認
-- `git add <resolved-file>` で各ファイルをステージング
+- Run `git diff --name-only --diff-filter=U` to list conflicted files
+- For each file:
+  - Read the file contents and identify conflict markers
+  - For **binary files**, defer to the user
+  - Understand the intent of both sides and merge appropriately
+  - **If unsure which side to adopt**, always use AskUserQuestion to present both changes and ask the user. Never guess or pick a side without confidence
+  - For **semantically contradictory changes** (e.g., different logic changes to the same function), also use AskUserQuestion to confirm with the user
+- `git add <resolved-file>` to stage each resolved file
 
-### 6. コミットとプッシュ
+### 6. Commit and Push
 
-- `git commit` （デフォルトのマージコミットメッセージを使用）
+- `git commit` (use the default merge commit message)
 - `git push`
 
-### 7. 結果報告
+### 7. Report Results
 
-以下の情報を報告：
-- 解消したコンフリクトファイルの一覧
-- 各ファイルの解消内容の要約
-- PR の URL
+Report the following:
+- List of resolved conflict files
+- Summary of how each conflict was resolved
+- PR URL
 
-## 安全策
+## Safety
 
-- 未コミット変更がある場合は処理を中断する
-- 問題が発生した場合は `git merge --abort` でロールバックする
-- バイナリファイルのコンフリクトはユーザーに委ねる
-- 意味的矛盾がある場合はユーザーに確認する
-- どちらを採用すべきか判断に迷う場合は必ずユーザーに質問する
+- Abort if uncommitted changes exist
+- Run `git merge --abort` to rollback if something goes wrong
+- Defer binary file conflicts to the user
+- Ask the user when semantically contradictory changes are found
+- Always ask the user when unsure which side to adopt
