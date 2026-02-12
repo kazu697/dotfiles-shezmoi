@@ -65,9 +65,10 @@ bindkey '^g' ghq-fzf
 function gw-fzf() {
   local selected=$(gtr list --porcelain | rg -v '\(detached\)' | awk '{print $2}' | fzf --prompt="worktree> ")
   if [ -n "$selected" ]; then
-    cd "$(git gtr go "$selected")"
+    BUFFER="cd \"$(git gtr go "$selected")\""
+    zle accept-line
   fi
-  zle reset-prompt
+  zle -R -c
 }
 zle -N gw-fzf
 bindkey '^W' gw-fzf
