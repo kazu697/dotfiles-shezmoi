@@ -18,30 +18,46 @@ else
   duration=$(awk "BEGIN {printf \"%.1fs\", $duration_ms/1000}")
 fi
 
-strip_ansi() { echo "$1" | sed 's/\x1b\[[0-9;]*m//g'; }
+make_bar() {
+  local pct="${1:-0}"
+  local width=10
+  local filled=$(( pct * width / 100 ))
+  [ "$filled" -gt "$width" ] && filled=$width
+  local empty=$(( width - filled ))
 
-left1=$(printf "\033[1;33m[%s]\033[0m | \033[1;36m%s\033[0m" "$model" "$dir_name")
-[ -n "$branch" ] && left1="${left1} | ${branch}"
+  if [ "$pct" -ge 90 ]; then
+    color="\033[1;31m"
+  elif [ "$pct" -ge 70 ]; then
+    color="\033[1;33m"
+  else
+    color="\033[1;32m"
+  fi
 
-cols=$(tput cols 2>/dev/null || echo 80)
-left1_plain=$(strip_ansi "$left1")
-git_status_plain=$(strip_ansi "$git_status")
-pad=$(( cols - ${#left1_plain} - ${#git_status_plain} ))
-[ "$pad" -lt 1 ] && pad=1
+  local bar
+  bar=$(printf '%0.s=' $(seq 1 "$filled") 2>/dev/null)
+  bar="${bar}$(printf '%0.s ' $(seq 1 "$empty") 2>/dev/null)"
+  printf "${color}[%s]\033[0m" "$bar"
+}
 
-printf "%s%${pad}s%s\n" "$left1" "" "$git_status"
+# 1行目: [モデル名] | ディレクトリ名 | ブランチ名 git_status
+line1=$(printf "\033[1;33m[%s]\033[0m | \033[1;36m%s\033[0m" "$model" "$dir_name")
+if [ -n "$branch" ]; then
+  line1="${line1} | ${branch}${git_status}"
+fi
+printf "%s\n" "$line1"
 
-ratelimit_str=""
+# 2行目: rate_limitバー | 実行時間
+line2=""
 if [ -n "$rate_five" ] && [ -n "$rate_seven" ]; then
-  ratelimit_str=$(printf "\033[1;90m5h: %s%% / 7d: %s%%\033[0m" "$rate_five" "$rate_seven")
+  line2="$(make_bar "$rate_five") \033[1;90m5h\033[0m $(make_bar "$rate_seven") \033[1;90m7d\033[0m"
 elif [ -n "$rate_five" ]; then
-  ratelimit_str=$(printf "\033[1;90m5h: %s%%\033[0m" "$rate_five")
+  line2="$(make_bar "$rate_five") \033[1;90m5h\033[0m"
 elif [ -n "$rate_seven" ]; then
-  ratelimit_str=$(printf "\033[1;90m7d: %s%%\033[0m" "$rate_seven")
+  line2="$(make_bar "$rate_seven") \033[1;90m7d\033[0m"
 fi
 
-if [ -n "$ratelimit_str" ]; then
-  printf "%s | \033[1;90m%s\033[0m\n" "$ratelimit_str" "$duration"
+if [ -n "$line2" ]; then
+  printf "${line2} | \033[1;90m%s\033[0m\n" "$duration"
 else
   printf "\033[1;90m%s\033[0m\n" "$duration"
 fi
