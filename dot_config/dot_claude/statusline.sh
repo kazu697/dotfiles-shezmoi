@@ -61,9 +61,9 @@ fmt_label() {
   local reset_str
   reset_str=$(format_reset "$resets_at")
   if [ -n "$reset_str" ]; then
-    printf "\033[1;90m%s(%s)\033[0m" "$label" "$reset_str"
+    printf "\033[0;36m%s(%s)\033[0m" "$label" "$reset_str"
   else
-    printf "\033[1;90m%s\033[0m" "$label"
+    printf "\033[0;36m%s\033[0m" "$label"
   fi
 }
 
@@ -76,7 +76,7 @@ elif [ -n "$rate_seven" ]; then
 fi
 
 if [ -n "$line2" ]; then
-  printf "${line2} | \033[1;90m%s\033[0m\n" "$duration"
+  printf "${line2} | \033[0;36m%s\033[0m\n" "$duration"
 else
-  printf "\033[1;90m%s\033[0m\n" "$duration"
+  printf "\033[0;36m%s\033[0m\n" "$duration"
 fi
