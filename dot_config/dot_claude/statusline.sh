@@ -7,6 +7,7 @@ dir_name=$(basename "$cwd")
 
 branch=$(cd "$cwd" 2>/dev/null && starship module git_branch 2>/dev/null | tr -d '\n')
 git_status=$(cd "$cwd" 2>/dev/null && starship module git_status 2>/dev/null | tr -d '\n')
+git_file_count=$(cd "$cwd" 2>/dev/null && git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
 
 rate_five=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
 rate_five_reset=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
@@ -50,7 +51,9 @@ make_bar() {
 # 1行目: [モデル名] | ディレクトリ名 | ブランチ名 git_status
 line1=$(printf "\033[1;33m[%s]\033[0m | \033[1;36m%s\033[0m" "$model" "$dir_name")
 if [ -n "$branch" ]; then
-  line1="${line1} | ${branch}${git_status}"
+  git_info="${git_status}"
+  [ "${git_file_count:-0}" -gt 0 ] && git_info="${git_info} $(printf '\033[0;37m%s\033[0m' "$git_file_count")"
+  line1="${line1} | ${branch}${git_info}"
 fi
 printf "%s\n" "$line1"
 
