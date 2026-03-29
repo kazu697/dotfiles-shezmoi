@@ -23,17 +23,7 @@ fi
 format_reset() {
   local resets_at="$1"
   [ -z "$resets_at" ] && return
-  local now diff hours mins
-  now=$(date +%s)
-  diff=$(( resets_at - now ))
-  [ "$diff" -le 0 ] && printf "now" && return
-  hours=$(( diff / 3600 ))
-  mins=$(( (diff % 3600) / 60 ))
-  if [ "$hours" -gt 0 ]; then
-    printf "%dh%dm" "$hours" "$mins"
-  else
-    printf "%dm" "$mins"
-  fi
+  date -r "$resets_at" "+%H:%M" 2>/dev/null
 }
 
 make_bar() {
