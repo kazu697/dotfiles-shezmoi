@@ -9,7 +9,9 @@ branch=$(cd "$cwd" 2>/dev/null && starship module git_branch 2>/dev/null | tr -d
 git_status=$(cd "$cwd" 2>/dev/null && starship module git_status 2>/dev/null | tr -d '\n')
 
 rate_five=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
+rate_five_reset=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
 rate_seven=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
+rate_seven_reset=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
 
 duration_ms=$(echo "$input" | jq -r '.cost.total_duration_ms // 0')
 if [ "$duration_ms" -ge 60000 ]; then
@@ -17,6 +19,22 @@ if [ "$duration_ms" -ge 60000 ]; then
 else
   duration=$(awk "BEGIN {printf \"%.1fs\", $duration_ms/1000}")
 fi
+
+format_reset() {
+  local resets_at="$1"
+  [ -z "$resets_at" ] && return
+  local now diff hours mins
+  now=$(date +%s)
+  diff=$(( resets_at - now ))
+  [ "$diff" -le 0 ] && printf "now" && return
+  hours=$(( diff / 3600 ))
+  mins=$(( (diff % 3600) / 60 ))
+  if [ "$hours" -gt 0 ]; then
+    printf "%dh%dm" "$hours" "$mins"
+  else
+    printf "%dm" "$mins"
+  fi
+}
 
 make_bar() {
   local pct="${1:-0}"
@@ -48,12 +66,23 @@ printf "%s\n" "$line1"
 
 # 2行目: rate_limitバー | 実行時間
 line2=""
+fmt_label() {
+  local label="$1" resets_at="$2"
+  local reset_str
+  reset_str=$(format_reset "$resets_at")
+  if [ -n "$reset_str" ]; then
+    printf "\033[1;90m%s(%s)\033[0m" "$label" "$reset_str"
+  else
+    printf "\033[1;90m%s\033[0m" "$label"
+  fi
+}
+
 if [ -n "$rate_five" ] && [ -n "$rate_seven" ]; then
-  line2="$(make_bar "$rate_five") \033[1;90m5h\033[0m $(make_bar "$rate_seven") \033[1;90m7d\033[0m"
+  line2="$(make_bar "$rate_five") $(fmt_label "5h" "$rate_five_reset") $(make_bar "$rate_seven") $(fmt_label "7d" "$rate_seven_reset")"
 elif [ -n "$rate_five" ]; then
-  line2="$(make_bar "$rate_five") \033[1;90m5h\033[0m"
+  line2="$(make_bar "$rate_five") $(fmt_label "5h" "$rate_five_reset")"
 elif [ -n "$rate_seven" ]; then
-  line2="$(make_bar "$rate_seven") \033[1;90m7d\033[0m"
+  line2="$(make_bar "$rate_seven") $(fmt_label "7d" "$rate_seven_reset")"
 fi
 
 if [ -n "$line2" ]; then
