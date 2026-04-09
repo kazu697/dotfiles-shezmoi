@@ -36,7 +36,7 @@ maximize = true
 window-subtitle = working-directory
 
 # Shell
-shell-integration-features = no-cursor
+shell-integration-features = no-cursor,no-title
 
 # Cursor
 cursor-style = block

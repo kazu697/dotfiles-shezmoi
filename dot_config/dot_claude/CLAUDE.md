@@ -19,19 +19,21 @@ Simplification and Exploration: Use analogies to simplify complex topics and exp
 3. **Comments only for WHY** - Describe WHAT only if it impacts readability
 4. Do NOT add Co-Authored-By in commit messages
 5. commit messages have to be 1 sentence.
-6. you must commit changes when you change source code.
-7. when you commit somthing, push its commits.
-8. Commit message is a just one sentense.
+6. when you commit somthing, push its commits.
+7. Commit message is a just one sentense.
+8. Please do not leave comments when the function's purpose is clear from its implementation.
 9. Avoid chaining commands together
    For example,
    instead of running `git add ****** && git commit -m "***"`,
    please execute them as follows:
    `git add *****`
    `git commit -m "******"`
-10. If you make changes and then git push when a PR has already been created, please change the PR title and description.
-11. If I ask you something or wirte [q] in a prompt, Do not change the plan mode, just answer the quesitions I asked.
-12. When implementing, refer to the implementation of files in the same hierarchy.
-13. When implementing, please refer to existing implementations. If an existing implementation violates the architecture, please ask questions.
+10. If I ask you something or wirte [q] in a prompt, Do not change the plan mode, just answer the quesitions I asked.
+11. When implementing, refer to the implementation of files in the same hierarchy.
+12. When implementing, please refer to existing implementations. If an existing implementation violates the architecture, please ask questions.
+13. If you anticipate a large diff before implementation, please implement in a way that allows you to split the PR beforehand.
+    Similarly, when in plan mode, instead of making all modifications in a single task and then creating a PR, please create a PR midway through and include a review task. Then, once that PR's review passes, proceed to the next task.
+    The granularity for decomposing tasks is generally assumed to be per directory, and if it exceeds 10 files, please consider splitting it.
 
 ## Code Knowledge
 
