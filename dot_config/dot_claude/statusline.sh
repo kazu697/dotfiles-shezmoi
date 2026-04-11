@@ -57,8 +57,6 @@ if [ -n "$branch" ]; then
 fi
 printf "%s\n" "$line1"
 
-# 2行目: rate_limitバー | 実行時間
-line2=""
 fmt_label() {
   local label="$1" resets_at="$2" fmt="${3:-%H:%M}"
   local reset_str
@@ -70,23 +68,22 @@ fmt_label() {
   fi
 }
 
-if [ -n "$ctx_pct" ]; then
-  ctx_used=$(printf '%.0f' "$ctx_pct")
-  ctx_left=$(( 100 - ctx_used ))
-  bar=$(make_bar "$ctx_pct")
-  printf "%s \033[0;37mctx %d%% / %d%%\033[0m\n" "$bar" "$ctx_used" "$ctx_left"
-fi
+# 2行目: ctx bar + % | 5h label + % | 7d label + %
+ctx_used=$(printf '%.0f' "${ctx_pct:-0}")
+ctx_left=$(( 100 - ctx_used ))
+bar=$(make_bar "${ctx_pct:-0}")
+line2="${bar} \033[0;37mctx ${ctx_used}% / ${ctx_left}%\033[0m"
+
 if [ -n "$rate_five" ]; then
   five_used=$(printf '%.0f' "$rate_five")
   five_left=$(( 100 - five_used ))
-  bar=$(make_bar "$rate_five")
   label=$(fmt_label "5h" "$rate_five_reset")
-  printf "%s %s \033[0;37m%d%% / %d%%\033[0m\n" "$bar" "$label" "$five_used" "$five_left"
+  line2="${line2} | ${label} \033[0;37m${five_used}% / ${five_left}%\033[0m"
 fi
 if [ -n "$rate_seven" ]; then
   seven_used=$(printf '%.0f' "$rate_seven")
   seven_left=$(( 100 - seven_used ))
-  bar=$(make_bar "$rate_seven")
   label=$(fmt_label "7d" "$rate_seven_reset" "%-m/%-d %H:%M")
-  printf "%s %s \033[0;37m%d%% / %d%%\033[0m\n" "$bar" "$label" "$seven_used" "$seven_left"
+  line2="${line2} | ${label} \033[0;37m${seven_used}% / ${seven_left}%\033[0m"
 fi
+printf "%b\n" "$line2"
