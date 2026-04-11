@@ -42,10 +42,10 @@ make_bar() {
     color="\033[1;32m"
   fi
 
-  local bar
-  bar=$(printf '%0.s=' $(seq 1 "$filled") 2>/dev/null)
-  bar="${bar}$(printf '%0.s ' $(seq 1 "$empty") 2>/dev/null)"
-  printf "${color}[%s]\033[0m" "$bar"
+  local filled_bar="" empty_bar=""
+  for ((i=0; i<filled; i++)); do filled_bar+="█"; done
+  for ((i=0; i<empty; i++)); do empty_bar+="░"; done
+  printf "${color}%s\033[0;37m%s\033[0m" "$filled_bar" "$empty_bar"
 }
 
 # 1行目: [モデル名] | ディレクトリ名 | ブランチ名 git_status
