@@ -23,37 +23,9 @@
       "Bash(aws:*)",
       "Bash(ssh:*)"
     ],
-    "ask": [
-      "Bash(gh pr merge *)",
-      "Bash(git rebase *)",
-      "Bash(git reset *)",
-      "Bash(git merge *)"
-    ]
+    "ask": ["Bash(gh pr merge *)", "Bash(git reset *)", "Bash(git merge *)"]
   },
-  "hooks": {
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "terminal-notifier -title 'Claude Code' -subtitle '処理完了' -message 'すべてのタスクが終了しました' -sound Blow"
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "terminal-notifier -title 'Claude Code' -message '質問されています。' -sound Glass"
-          }
-        ]
-      }
-    ]
-  },
+  "model": "opusplan",
   "statusLine": {
     "type": "command",
     "command": "bash ~/.config/.claude/statusline.sh",
@@ -68,11 +40,32 @@
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": true,
-    "allowUnsandboxedCommands": false,
-    "excludedCommands": ["git", "gh", "docker", "make", "go"],
     "network": {
       "allowedDomains": ["github.com", "api.github.com"]
-    }
+    },
+    "excludedCommands": ["git", "gh", "docker", "make", "go"]
   },
-  "autoUpdatesChannel": "latest"
+  "autoUpdatesChannel": "latest",
+  "hooks": {
+    "WorktreeCreate": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.config/.claude/hooks/worktree-create.sh"
+          }
+        ]
+      }
+    ],
+    "WorktreeRemove": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.config/.claude/hooks/worktree-remove.sh"
+          }
+        ]
+      }
+    ]
+  }
 }
