@@ -17,12 +17,6 @@ rate_five_reset=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // emp
 rate_seven=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
 rate_seven_reset=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
 
-duration_ms=$(echo "$input" | jq -r '.cost.total_duration_ms // 0')
-if [ "$duration_ms" -ge 60000 ]; then
-  duration=$(awk "BEGIN {printf \"%.1fm\", $duration_ms/60000}")
-else
-  duration=$(awk "BEGIN {printf \"%.1fs\", $duration_ms/1000}")
-fi
 
 format_reset() {
   local resets_at="$1" fmt="${2:-%H:%M}"
@@ -94,4 +88,3 @@ if [ -n "$rate_seven" ]; then
   label=$(fmt_label "7d" "$rate_seven_reset" "%-m/%-d %H:%M")
   printf "%s %s \033[0;37m%d%% / %d%%\033[0m\n" "$bar" "$label" "$seven_used" "$seven_left"
 fi
-printf "\033[0;37m%s\033[0m\n" "$duration"
