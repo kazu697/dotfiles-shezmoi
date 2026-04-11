@@ -30,7 +30,8 @@ format_reset() {
 }
 
 make_bar() {
-  local pct="${1:-0}"
+  local pct
+  pct=$(printf '%.0f' "${1:-0}" 2>/dev/null || echo 0)
   local width=10
   local filled=$(( pct * width / 100 ))
   [ "$filled" -gt "$width" ] && filled=$width
