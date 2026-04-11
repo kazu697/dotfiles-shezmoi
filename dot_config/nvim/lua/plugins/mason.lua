@@ -10,7 +10,6 @@ return {
       "shfmt",
       "gopls",
       "lua-language-server",
-      "golangci-lint-langserver",
     },
   },
   ---@param opts MasonSettings | {ensure_installed: string[]}
