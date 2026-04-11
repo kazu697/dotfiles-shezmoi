@@ -25,9 +25,9 @@ else
 fi
 
 format_reset() {
-  local resets_at="$1"
+  local resets_at="$1" fmt="${2:-%H:%M}"
   [ -z "$resets_at" ] && return
-  date -r "$resets_at" "+%H:%M" 2>/dev/null
+  date -r "$resets_at" "+${fmt}" 2>/dev/null
 }
 
 make_bar() {
@@ -64,9 +64,9 @@ printf "%s\n" "$line1"
 # 2行目: rate_limitバー | 実行時間
 line2=""
 fmt_label() {
-  local label="$1" resets_at="$2"
+  local label="$1" resets_at="$2" fmt="${3:-%H:%M}"
   local reset_str
-  reset_str=$(format_reset "$resets_at")
+  reset_str=$(format_reset "$resets_at" "$fmt")
   if [ -n "$reset_str" ]; then
     printf "\033[0;37m%s(%s)\033[0m" "$label" "$reset_str"
   else
@@ -91,7 +91,7 @@ if [ -n "$rate_seven" ]; then
   seven_used=$(printf '%.0f' "$rate_seven")
   seven_left=$(( 100 - seven_used ))
   bar=$(make_bar "$rate_seven")
-  label=$(fmt_label "7d" "$rate_seven_reset")
+  label=$(fmt_label "7d" "$rate_seven_reset" "%-m/%-d %H:%M")
   printf "%s %s \033[0;37m%d%% / %d%%\033[0m\n" "$bar" "$label" "$seven_used" "$seven_left"
 fi
 printf "\033[0;37m%s\033[0m\n" "$duration"
