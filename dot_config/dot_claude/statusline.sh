@@ -9,6 +9,8 @@ branch=$(cd "$cwd" 2>/dev/null && starship module git_branch 2>/dev/null | tr -d
 git_status=$(cd "$cwd" 2>/dev/null && starship module git_status 2>/dev/null | tr -d '\n')
 git_file_count=$(cd "$cwd" 2>/dev/null && git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
 
+ctx_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
+
 rate_five=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
 rate_five_reset=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
 rate_seven=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
@@ -70,6 +72,7 @@ fmt_label() {
   fi
 }
 
+[ -n "$ctx_pct" ]    && printf "$(make_bar "$ctx_pct") \033[0;37mctx\033[0m\n"
 [ -n "$rate_five" ]  && printf "$(make_bar "$rate_five") $(fmt_label "5h" "$rate_five_reset")\n"
 [ -n "$rate_seven" ] && printf "$(make_bar "$rate_seven") $(fmt_label "7d" "$rate_seven_reset")\n"
 printf "\033[0;37m%s\033[0m\n" "$duration"
