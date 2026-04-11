@@ -4,13 +4,14 @@ return {
   { import = "lazyvim.plugins.extras.lang.go" },
 
   -- LazyVimのGo extrasがnvim-lintにgolangci-lintを登録するのを無効化
+  -- opts tableはdeep mergeされるため、関数形式で明示的に上書きする
   {
     "mfussenegger/nvim-lint",
-    opts = {
-      linters_by_ft = {
-        go = {},
-      },
-    },
+    opts = function(_, opts)
+      opts.linters_by_ft = opts.linters_by_ft or {}
+      opts.linters_by_ft.go = {}
+      return opts
+    end,
   },
 
   -- Configure gopls inlay hints
