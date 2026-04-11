@@ -5,9 +5,9 @@ model=$(echo "$input" | jq -r '.model.display_name // "unknown"')
 cwd=$(echo "$input" | jq -r '.workspace.current_dir // ""')
 dir_name=$(basename "$cwd")
 
-branch=$(cd "$cwd" 2>/dev/null && starship module git_branch 2>/dev/null | tr -d '\n')
-git_status=$(cd "$cwd" 2>/dev/null && starship module git_status 2>/dev/null | tr -d '\n')
-git_file_count=$(cd "$cwd" 2>/dev/null && git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
+branch=$(cd "$cwd" 2>/dev/null && git branch --show-current 2>/dev/null)
+git_staged=$(cd "$cwd" 2>/dev/null && git diff --cached --numstat 2>/dev/null | wc -l | tr -d ' ')
+git_modified=$(cd "$cwd" 2>/dev/null && git diff --numstat 2>/dev/null | wc -l | tr -d ' ')
 
 ctx_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 ctx_rem=$(echo "$input" | jq -r '.context_window.remaining_percentage // empty')
@@ -46,17 +46,15 @@ make_bar() {
   printf "${color}%s\033[0;37m%s\033[0m" "$filled_bar" "$empty_bar"
 }
 
-# 1行目: [モデル名] | ディレクトリ名 | ブランチ名 git_status
 line1=$(printf "\033[1;33m[%s]\033[0m | \033[1;36m%s\033[0m" "$model" "$dir_name")
 if [ -n "$branch" ]; then
-  git_info="${git_status}"
-  [ "${git_file_count:-0}" -gt 0 ] && git_info="${git_info} $(printf '\033[0;37m%s\033[0m' "$git_file_count")"
-  line1="${line1} | ${branch}${git_info}"
+  git_info="\033[0;32m${branch}\033[0m"
+  [ "${git_staged:-0}" -gt 0 ] && git_info="${git_info} \033[0;32m+${git_staged}\033[0m"
+  [ "${git_modified:-0}" -gt 0 ] && git_info="${git_info} \033[0;33m~${git_modified}\033[0m"
+  line1="${line1} | ${git_info}"
 fi
-printf "%s\n" "$line1"
+printf "%b\n" "$line1"
 
-# 2行目: rate_limitバー | 実行時間
-line2=""
 fmt_label() {
   local label="$1" resets_at="$2" fmt="${3:-%H:%M}"
   local reset_str
