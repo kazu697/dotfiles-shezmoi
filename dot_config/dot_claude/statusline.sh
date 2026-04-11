@@ -10,6 +10,7 @@ git_status=$(cd "$cwd" 2>/dev/null && starship module git_status 2>/dev/null | t
 git_file_count=$(cd "$cwd" 2>/dev/null && git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
 
 ctx_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
+ctx_rem=$(echo "$input" | jq -r '.context_window.remaining_percentage // empty')
 
 rate_five=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
 rate_five_reset=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
@@ -73,7 +74,24 @@ fmt_label() {
   fi
 }
 
-[ -n "$ctx_pct" ]    && printf "$(make_bar "$ctx_pct") \033[0;37mctx\033[0m\n"
-[ -n "$rate_five" ]  && printf "$(make_bar "$rate_five") $(fmt_label "5h" "$rate_five_reset")\n"
-[ -n "$rate_seven" ] && printf "$(make_bar "$rate_seven") $(fmt_label "7d" "$rate_seven_reset")\n"
+if [ -n "$ctx_pct" ]; then
+  ctx_used=$(printf '%.0f' "$ctx_pct")
+  ctx_left=$(( 100 - ctx_used ))
+  bar=$(make_bar "$ctx_pct")
+  printf "%s \033[0;37mctx %d%% / %d%%\033[0m\n" "$bar" "$ctx_used" "$ctx_left"
+fi
+if [ -n "$rate_five" ]; then
+  five_used=$(printf '%.0f' "$rate_five")
+  five_left=$(( 100 - five_used ))
+  bar=$(make_bar "$rate_five")
+  label=$(fmt_label "5h" "$rate_five_reset")
+  printf "%s %s \033[0;37m%d%% / %d%%\033[0m\n" "$bar" "$label" "$five_used" "$five_left"
+fi
+if [ -n "$rate_seven" ]; then
+  seven_used=$(printf '%.0f' "$rate_seven")
+  seven_left=$(( 100 - seven_used ))
+  bar=$(make_bar "$rate_seven")
+  label=$(fmt_label "7d" "$rate_seven_reset")
+  printf "%s %s \033[0;37m%d%% / %d%%\033[0m\n" "$bar" "$label" "$seven_used" "$seven_left"
+fi
 printf "\033[0;37m%s\033[0m\n" "$duration"
