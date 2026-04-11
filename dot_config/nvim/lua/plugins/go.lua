@@ -3,6 +3,16 @@ return {
   -- LazyVim Go extras: treesitter + gopls + DAP + mason
   { import = "lazyvim.plugins.extras.lang.go" },
 
+  -- LazyVimのGo extrasがnvim-lintにgolangci-lintを登録するのを無効化
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        go = {},
+      },
+    },
+  },
+
   -- Configure gopls inlay hints
   {
     "neovim/nvim-lspconfig",
