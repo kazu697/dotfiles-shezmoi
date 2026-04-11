@@ -70,16 +70,6 @@ fmt_label() {
   fi
 }
 
-if [ -n "$rate_five" ] && [ -n "$rate_seven" ]; then
-  line2="$(make_bar "$rate_five") $(fmt_label "5h" "$rate_five_reset") $(make_bar "$rate_seven") $(fmt_label "7d" "$rate_seven_reset")"
-elif [ -n "$rate_five" ]; then
-  line2="$(make_bar "$rate_five") $(fmt_label "5h" "$rate_five_reset")"
-elif [ -n "$rate_seven" ]; then
-  line2="$(make_bar "$rate_seven") $(fmt_label "7d" "$rate_seven_reset")"
-fi
-
-if [ -n "$line2" ]; then
-  printf "${line2} | \033[0;37m%s\033[0m\n" "$duration"
-else
-  printf "\033[0;37m%s\033[0m\n" "$duration"
-fi
+[ -n "$rate_five" ]  && printf "$(make_bar "$rate_five") $(fmt_label "5h" "$rate_five_reset")\n"
+[ -n "$rate_seven" ] && printf "$(make_bar "$rate_seven") $(fmt_label "7d" "$rate_seven_reset")\n"
+printf "\033[0;37m%s\033[0m\n" "$duration"
