@@ -23,30 +23,26 @@
       "Bash(aws:*)",
       "Bash(ssh:*)"
     ],
-    "ask": ["Bash(gh pr merge *)", "Bash(git reset *)", "Bash(git merge *)"]
+    "ask": [
+      "Bash(gh pr merge *)",
+      "Bash(git reset *)",
+      "Bash(git merge *)"
+    ]
   },
   "model": "opusplan",
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.config/.claude/statusline.sh",
-    "padding": 0
-  },
-  "enabledPlugins": {
-    "example-skills@anthropic-agent-skills": true,
-    "coderabbit@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true
-  },
-  "language": "日本語",
-  "sandbox": {
-    "enabled": true,
-    "autoAllowBashIfSandboxed": true,
-    "network": {
-      "allowedDomains": ["github.com", "api.github.com"]
-    },
-    "excludedCommands": ["git", "gh", "docker", "make", "go"]
-  },
-  "autoUpdatesChannel": "latest",
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"このplanの内容に新しい実装・修正作業が必要な場合は、/create-worktreeコマンドを使用して適切なブランチ名でworktreeを作成し、そのworktree内で作業を開始してください\"}}'",
+            "statusMessage": "worktreeの必要性を確認中..."
+          }
+        ]
+      }
+    ],
     "WorktreeCreate": [
       {
         "hooks": [
@@ -67,5 +63,39 @@
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.config/.claude/statusline.sh",
+    "padding": 0
+  },
+  "enabledPlugins": {
+    "example-skills@anthropic-agent-skills": true,
+    "coderabbit@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true
+  },
+  "language": "日本語",
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "network": {
+      "allowedDomains": [
+        "github.com",
+        "api.github.com"
+      ]
+    },
+    "excludedCommands": [
+      "git",
+      "gh",
+      "docker",
+      "make",
+      "go"
+    ]
+  },
+  "autoUpdatesChannel": "latest",
+  "voiceEnabled": true,
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
   }
 }
