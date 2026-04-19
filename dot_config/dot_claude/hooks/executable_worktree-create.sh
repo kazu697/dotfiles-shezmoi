@@ -11,5 +11,5 @@ cd "$CWD"
 
 git gtr new "$NAME" >&2
 
-WORKTREE_PATH=$(git gtr go "$NAME")
+WORKTREE_PATH=$(git gtr go "$NAME" 2>/dev/null | tail -n 1)
 echo "$WORKTREE_PATH"
