@@ -64,11 +64,28 @@ bindkey '^g' ghq-fzf
 
 # gtr worktree branch selector with fzf
 function gw-fzf() {
-  local selected=$(gtr list --porcelain | rg -v '\(detached\)' | awk '{print $2}' | fzf --prompt="worktree> ")
-  if [ -n "$selected" ]; then
-    BUFFER="cd \"$(git gtr go "$selected")\""
-    zle accept-line
+  local existing
+  existing=$(gtr list --porcelain | rg -v '\(detached\)' | awk '{print $2}')
+
+  local candidates
+  candidates=$(
+    [ -n "$existing" ] && echo "$existing" | sed 's/^/* /'
+    comm -23 \
+      <(git branch --format='%(refname:short)' 2>/dev/null | sort) \
+      <(echo "$existing" | sort) | sed 's/^/+ /'
+  )
+
+  local line
+  line=$(echo "$candidates" | fzf --prompt="worktree> ")
+  [ -z "$line" ] && { zle -R -c; return; }
+
+  local branch="${line:2}"
+  if [[ "$line" == "* "* ]]; then
+    BUFFER="cd \"$(git gtr go "$branch")\""
+  else
+    BUFFER="git gtr new $branch --yes && cd \"\$(git gtr go $branch)\""
   fi
+  zle accept-line
   zle -R -c
 }
 zle -N gw-fzf
