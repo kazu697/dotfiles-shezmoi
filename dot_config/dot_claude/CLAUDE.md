@@ -34,6 +34,8 @@ Simplification and Exploration: Use analogies to simplify complex topics and exp
 13. If you anticipate a large diff before implementation, please implement in a way that allows you to split the PR beforehand.
     Similarly, when in plan mode, instead of making all modifications in a single task and then creating a PR, please create a PR midway through and include a review task. Then, once that PR's review passes, proceed to the next task.
     The granularity for decomposing tasks is generally assumed to be per directory, and if it exceeds 10 files, please consider splitting it.
+14. If a pull request has been created for the branch you are currently working on, please check its description and file changes.
+15. Please avoid using pipes in command execution as much as possible.
 
 ## Code Knowledge
 

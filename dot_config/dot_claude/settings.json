@@ -29,7 +29,6 @@
       "Bash(git merge *)"
     ]
   },
-  "model": "opusplan",
   "hooks": {
     "PreToolUse": [
       {
@@ -92,10 +91,13 @@
       "go"
     ]
   },
+  "effortLevel": "xhigh",
   "autoUpdatesChannel": "latest",
-  "voiceEnabled": true,
   "voice": {
     "enabled": true,
     "mode": "hold"
-  }
+  },
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true,
+  "model": "sonnet"
 }

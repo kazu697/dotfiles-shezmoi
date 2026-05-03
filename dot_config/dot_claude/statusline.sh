@@ -42,7 +42,7 @@ make_bar() {
   fi
 
   local filled_bar="" empty_bar=""
-  for ((i=0; i<filled; i++)); do filled_bar+="█"; done
+  for ((i=0; i<filled; i++)); do filled_bar+="▓"; done
   for ((i=0; i<empty; i++)); do empty_bar+="░"; done
   printf "${color}%s\033[0;37m%s\033[0m" "$filled_bar" "$empty_bar"
 }
@@ -70,9 +70,8 @@ fmt_label() {
 
 # 2行目: ctx bar + % | 5h label + % | 7d label + %
 ctx_used=$(printf '%.0f' "${ctx_pct:-0}")
-ctx_left=$(( 100 - ctx_used ))
 bar=$(make_bar "${ctx_pct:-0}")
-line2="${bar} \033[0;37mctx ${ctx_used}% / ${ctx_left}%\033[0m"
+line2="${bar} \033[0;37m${ctx_used}%\033[0m"
 
 if [ -n "$rate_five" ]; then
   five_used=$(printf '%.0f' "$rate_five")

@@ -16,6 +16,8 @@ export XDG_STATE_HOME=${HOME}/.local/state
 
 # claude
 export CLAUDE_CONFIG_DIR=${XDG_CONFIG_HOME}/.claude
+export CLAUDE_CODE_NO_FLICKER=1
+export CLAUDE_CODE_EFFORT_LEVEL="xhigh"
 
 # fzf
 export FZF_DEFAULT_OPTS=" --reverse --style=full:rounded --height 45%"
