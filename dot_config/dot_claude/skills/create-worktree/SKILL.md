@@ -1,5 +1,6 @@
 ---
-description: 作業内容からブランチ名を生成してworktreeを作成する
+name: create-worktree
+description: 作業内容からブランチ名を生成してworktreeを作成する。新規ブランチが必要なとき（新機能開発・バグ修正の着手時）や、PRを分割する際にブランチを切る場合にも使用する。
 allowed-tools: EnterWorktree
 ---
 
