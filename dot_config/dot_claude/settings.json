@@ -29,6 +29,7 @@
       "Bash(git merge *)"
     ]
   },
+  "model": "opusplan",
   "hooks": {
     "PreToolUse": [
       {
@@ -36,7 +37,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"このplanの内容に新しい実装・修正作業が必要な場合は、/create-worktreeコマンドを使用して適切なブランチ名でworktreeを作成し、そのworktree内で作業を開始してください\"}}'",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"このplanの内容に新しい実装・修正作業が必要な場合は、/worktreeコマンドを使用して適切なブランチ名でworktreeを作成または移動し、そのworktree内で作業を開始してください\"}}'",
             "statusMessage": "worktreeの必要性を確認中..."
           }
         ]
@@ -71,7 +72,8 @@
   "enabledPlugins": {
     "example-skills@anthropic-agent-skills": true,
     "coderabbit@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true
+    "lua-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true
   },
   "language": "日本語",
   "sandbox": {
@@ -97,7 +99,7 @@
     "enabled": true,
     "mode": "hold"
   },
+  "theme": "dark",
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "model": "sonnet"
+  "voiceEnabled": true
 }

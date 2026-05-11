@@ -36,6 +36,7 @@ Simplification and Exploration: Use analogies to simplify complex topics and exp
     The granularity for decomposing tasks is generally assumed to be per directory, and if it exceeds 10 files, please consider splitting it.
 14. If a pull request has been created for the branch you are currently working on, please check its description and file changes.
 15. Please avoid using pipes in command execution as much as possible.
+16. **作業開始前のworktree確認**: 現在のブランチがdefaultブランチ（main/master）の場合は、作業を開始する前に必ず `worktree` スキルを使用してworktreeを作成または移動してから作業を開始する。
 
 ## Code Knowledge
 
