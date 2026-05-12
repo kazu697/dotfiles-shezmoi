@@ -1,7 +1,7 @@
 ---
 name: worktree
 description: 状況に応じてgit worktreeを作成または既存のworktreeに移動する。新規ブランチが必要なとき（新機能開発・バグ修正の着手時）や、既存のworktreeへの移動、PRを分割する際にブランチを切る場合に使用する。
-allowed-tools: Bash, EnterWorktree
+allowed-tools: Bash, EnterWorktree, ExitPlanMode
 ---
 
 # Worktree
@@ -23,4 +23,5 @@ allowed-tools: Bash, EnterWorktree
    - **既存のworktreeが存在する場合**: `path` パラメータで `EnterWorktree` を呼び出して移動する
    - **存在しない場合**: `name` パラメータで `EnterWorktree` を呼び出して新規作成する
 
-4. worktreeへの移動/作成が完了したら、作業内容とブランチ名をユーザーに伝える
+4. worktreeへの移動/作成が完了したら、`ExitPlanMode` を呼び出してプランモードを終了する
+   - `prompt` パラメータには「worktree への移動が完了しました。ブランチ: {ブランチ名}。次の作業を開始してください。」のように作業内容とブランチ名を含める
