@@ -31,18 +31,6 @@
   },
   "model": "opusplan",
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "ExitPlanMode",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"このplanの内容に新しい実装・修正作業が必要な場合は、ExitPlanModeを呼び出す前に worktree スキル（Skill tool: skill=worktree）を使用して適切なブランチ名でworktreeを作成または移動し、そのworktree内で作業を開始してください\"}}'",
-            "statusMessage": "worktreeの必要性を確認中..."
-          }
-        ]
-      }
-    ],
     "WorktreeCreate": [
       {
         "hooks": [
