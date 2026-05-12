@@ -1,0 +1,52 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if ! command -v jq &>/dev/null; then
+  echo "Error: jq が必要です。brew install jq でインストールしてください。" >&2
+  exit 1
+fi
+
+if git_root=$(git rev-parse --show-toplevel 2>/dev/null); then
+  target_dir="$git_root/.claude"
+else
+  target_dir="$(pwd)/.claude"
+fi
+
+settings_file="$target_dir/settings.local.json"
+
+hook_json=$(cat <<'HOOKEOF'
+{
+  "matcher": "ExitPlanMode",
+  "hooks": [
+    {
+      "type": "command",
+      "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"このplanの内容に新しい実装・修正作業が必要な場合は、ExitPlanModeを呼び出す前に worktree スキル（Skill tool: skill=worktree）を使用して適切なブランチ名でworktreeを作成または移動し、そのworktree内で作業を開始してください\"}}'",
+      "statusMessage": "worktreeの必要性を確認中..."
+    }
+  ]
+}
+HOOKEOF
+)
+
+mkdir -p "$target_dir"
+
+if [[ ! -f "$settings_file" ]]; then
+  jq -n --argjson hook "$hook_json" '{"hooks": {"PreToolUse": [$hook]}}' > "$settings_file"
+  echo "作成しました: $settings_file"
+  exit 0
+fi
+
+existing=$(jq '.hooks.PreToolUse // [] | map(select(.matcher == "ExitPlanMode")) | length' "$settings_file")
+
+if [[ "$existing" -gt 0 ]]; then
+  echo "ExitPlanMode フックは既に存在します: $settings_file"
+  exit 0
+fi
+
+tmp_file="${settings_file}.tmp"
+jq --argjson hook "$hook_json" '
+  .hooks.PreToolUse = ((.hooks.PreToolUse // []) + [$hook])
+' "$settings_file" > "$tmp_file"
+mv "$tmp_file" "$settings_file"
+echo "追加しました: $settings_file"
