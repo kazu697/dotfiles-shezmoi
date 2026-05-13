@@ -8,9 +8,22 @@ allowed-tools: Bash(git *), Bash(gtr *), ExitPlanMode
 
 引数: $ARGUMENTS
 
+## 適用条件
+
+ファイルの編集・実装作業を開始する前は、必ずこのスキルでworktreeを作成または移動してから作業を開始する。
+
+ただし、以下の場合はworktreeの作成をスキップしてそのまま作業を開始する:
+- 現在すでに作業ブランチ（main/master以外のブランチ）にいる場合
+- 現在すでにworktree内にいる場合（`git worktree list` でカレントディレクトリがworktreeとして確認できる場合）
+
 ## 手順
 
-1. `git worktree list` を実行し、既存のworktreeを確認する
+1. 現在の作業場所を確認する
+   ```bash
+   git branch --show-current
+   git worktree list
+   ```
+   - 現在のブランチがmain/master以外、またはカレントディレクトリがworktreeであれば **手順2〜3をスキップ** してそのまま作業を開始する
 
 2. 受け取った作業内容から、移動先を判断する
    - 引数に既存のブランチ名やパスが含まれる場合 → そのworktreeに移動
