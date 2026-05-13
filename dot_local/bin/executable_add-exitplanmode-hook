@@ -9,6 +9,20 @@ fi
 
 if git_root=$(git rev-parse --show-toplevel 2>/dev/null); then
   target_dir="$git_root/.claude"
+
+  gtr_includes=(
+    "**/.env*"
+    "./CLAUDE.local.md"
+    "**/*.local.md"
+    "**/*.local.json"
+  )
+  for include in "${gtr_includes[@]}"; do
+    existing_values=$(git -C "$git_root" config --get-all 'gtr.copy.include' 2>/dev/null || true)
+    if ! echo "$existing_values" | grep -qxF "$include"; then
+      git -C "$git_root" config --add 'gtr.copy.include' "$include"
+    fi
+  done
+  echo "gtr copy 設定を追加しました: $git_root/.git/config"
 else
   target_dir="$(pwd)/.claude"
 fi
