@@ -17,26 +17,26 @@ Simplification and Exploration: Use analogies to simplify complex topics and exp
 1. **Always get a check after Todo generation** - Output Todo before implementation
 2. **Implement with TDD** - Refer to `tdd-workflow` skill and `/tdd:*` commands
 3. **Comments only for WHY** - Describe WHAT only if it impacts readability
-4. Do NOT add Co-Authored-By in commit messages
-5. commit messages have to be 1 sentence.
-6. when you commit somthing, push its commits.
-7. Commit message is a just one sentense.
-8. Please do not leave comments when the function's purpose is clear from its implementation.
-9. Avoid chaining commands together
+4. commit messages have to be 1 sentence.
+5. Do git add automatically but Don't commit automatically.
+6. Commit message is a just one sentense.
+7. Please do not leave comments when the function's purpose is clear from its implementation.
+8. Avoid chaining commands together
    For example,
    instead of running `git add ****** && git commit -m "***"`,
    please execute them as follows:
    `git add *****`
    `git commit -m "******"`
-10. If I ask you something or wirte [q] in a prompt, Do not change the plan mode, just answer the quesitions I asked.
-11. When implementing, refer to the implementation of files in the same hierarchy.
-12. When implementing, please refer to existing implementations. If an existing implementation violates the architecture, please ask questions.
-13. If you anticipate a large diff before implementation, please implement in a way that allows you to split the PR beforehand.
+9. If I ask you something or wirte [q] in a prompt, Do not change the plan mode, just answer the quesitions I asked.
+10. When implementing, refer to the implementation of files in the same hierarchy.
+11. When implementing, please refer to existing implementations. If an existing implementation violates the architecture, please ask questions.
+12. If you anticipate a large diff before implementation, please implement in a way that allows you to split the PR beforehand.
     Similarly, when in plan mode, instead of making all modifications in a single task and then creating a PR, please create a PR midway through and include a review task. Then, once that PR's review passes, proceed to the next task.
     The granularity for decomposing tasks is generally assumed to be per directory, and if it exceeds 10 files, please consider splitting it.
-14. If a pull request has been created for the branch you are currently working on, please check its description and file changes.
-15. Please avoid using pipes in command execution as much as possible.
-16. **作業開始前のworktree確認**: 現在のブランチがdefaultブランチ（main/master）の場合は、作業を開始する前に必ず `worktree` スキルを使用してworktreeを作成または移動してから作業を開始する。
+13. If a pull request has been created for the branch you are currently working on, please check its description and file changes.
+14. Please avoid using pipes in command execution as much as possible.
+15. **作業開始前のworktree確認**: 現在のブランチがdefaultブランチ（main/master）の場合は、作業を開始する前に必ず `worktree` スキルを使用してworktreeを作成または移動してから作業を開始する。
+16. Use sub agents when it's manipulate something.
 
 ## Code Knowledge
 

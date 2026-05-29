@@ -23,11 +23,7 @@
       "Bash(aws:*)",
       "Bash(ssh:*)"
     ],
-    "ask": [
-      "Bash(gh pr merge *)",
-      "Bash(git reset *)",
-      "Bash(git merge *)"
-    ]
+    "ask": ["Bash(gh pr merge *)", "Bash(git reset *)", "Bash(git merge *)"]
   },
   "model": "opusplan",
   "hooks": {
@@ -52,6 +48,7 @@
       }
     ]
   },
+  "preferredNotifChannel": "terminal_bell",
   "statusLine": {
     "type": "command",
     "command": "bash ~/.config/.claude/statusline.sh",
@@ -68,18 +65,9 @@
     "enabled": true,
     "autoAllowBashIfSandboxed": true,
     "network": {
-      "allowedDomains": [
-        "github.com",
-        "api.github.com"
-      ]
+      "allowedDomains": ["github.com", "api.github.com"]
     },
-    "excludedCommands": [
-      "git",
-      "gh",
-      "docker",
-      "make",
-      "go"
-    ]
+    "excludedCommands": ["git", "gh", "docker", "make", "go"]
   },
   "effortLevel": "xhigh",
   "autoUpdatesChannel": "latest",
